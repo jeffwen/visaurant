@@ -1,0 +1,34 @@
+.table {
+    width: auto;
+    border: 0;
+}
+
+#address {
+line-height: 1;
+text-align:right;
+white-space: pre-wrap;
+}
+
+.cluster_photos {
+    max-height: 300px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.logo {
+    height: 150%;
+    margin-top: -10%;
+}
+
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+   max-width:1200px;
+  }
+}
+
+img.img-responsive {
+    height:184px;
+    width:auto;
+    max-width:245px;
+}
