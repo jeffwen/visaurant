@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{{data.name}}</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href= "{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/thumbnail-gallery.css') }}" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <link href= "{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+		  <img class="logo" src="https://s3-us-west-1.amazonaws.com/yelpphoto/static_images/visaurant_logo_white_helv.png">
+		</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                      <a href="#" data-toggle="modal" data-target="#about_modal">About</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#contact_modal">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+<!-- modal for about and contact info -->
+<div class="modal fade" id="about_modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+	<div class="modal-body">
+	  <p>Something about this project</p>
+	  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contact_modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+	<div class="modal-body">
+	  <p>Something somthing contact</p>
+	  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-9">
+                <h1 class="page-header">{{data.name}}</h1>
+            </div>
+	    <div class="col-lg-3" id="address">
+                <p>{{data.full_address}}</p>
+            </div>
+	</div>
+
+	{% for key, value in clusters.iteritems()%}
+	{% set outer_loop = loop %}
+	
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-toggle="modal" data-target="#{{ outer_loop.index0 }}">
+                    <img class="img-responsive" src={{value[0][0]}} alt="">
+                </a>
+		
+
+<div class="modal fade" id="{{ outer_loop.index0 }}" role="dialog">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+	<div class="modal-body">
+	  <div class="cluster_photos">
+	    {% for photo in value %}
+                <img src={{photo[0]}} class="img-rounded" height="150" title="{{photo[1]}}" data-modal-num="{{outer_loop.index0}}">
+	    {% endfor %}
+	  </div>
+	  <div id="reviews_div_{{outer_loop.index0}}"></div>
+	</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+		</div>
+
+{% endfor %}
+		
+            </div>
+
+    
+	    <div class="col-lg-12 restaurant-detail">
+		<div class="col-md-1">
+
+		</div>
+		<div class="col-md-5">
+		  {{ hours.to_html(classes="table table-striped").replace('border="1"','border="0"') | safe}}
+		</div>
+		<div class="col-md-5">
+		  {{"decoupled-map"|googlemap(data.latitude, data.longitude, markers=[(data.latitude, data.longitude)], style="width:450px;height:300px;")}}
+		</div>
+		<div class="col-md-1">
+		 
+		</div>
+            </div>
+	    
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Jeff's Metis Final Project</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container--->
+
+    <!-- jQuery -->
+    <script src="{{url_for('static', filename='js/jquery.js') }}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{url_for('static', filename='js/bootstrap.js') }}"></script>
+
+    <script>
+      $("[id^=reviews_div_]").hide();
+      
+       function getReviews(caption,business_id, modal_num){
+       $.ajax({
+         type: "POST",
+         contentType: "application/json; charset=utf-8",
+         url: "/modal",
+         dataType: "json",
+         async: true,
+         data: JSON.stringify({'text':caption,'business_id':business_id}),
+      success: function (data) {
+      $("#reviews_div_"+modal_num).html("");
+       for (i=0; i <=data.length; i++) {
+	$("#reviews_div_"+modal_num).append("<li>"+data[i]['text']+"</li>"+"<hr>");
+       console.log(modal_num);
+         };},
+         error: function (data) {
+         }
+       })
+	  }
+
+      $("img.img-rounded").click(function(){
+	aStr = $(this).attr('title');
+	modal_num = $(this).attr('data-modal-num')  
+	getReviews(aStr,"{{businessid}}", modal_num);
+	$('#reviews_div_'+modal_num).show();		  
+
+    });
+    </script>
+</body>
+
+</html>

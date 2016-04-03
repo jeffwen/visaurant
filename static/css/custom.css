@@ -7,6 +7,21 @@
 line-height: 1;
 text-align:right;
 white-space: pre-wrap;
+margin-top: -10px;
+padding-right: 40px;
+text-color:gray;
+
+}
+
+.page-header {
+    padding-bottom:0px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.restaurant-detail {
+    margin-top:20px;
+
 }
 
 .cluster_photos {
@@ -15,9 +30,20 @@ white-space: pre-wrap;
     white-space: nowrap;
 }
 
+a.navbar-brand {
+    margin: 0% 0% 0% -25%;
+
+}
+
 .logo {
-    height: 150%;
-    margin-top: -10%;
+    max-height: 350%;
+    margin: -19% 0% 0% 0%;
+}
+
+[id^="reviews_div_"] {
+    margin: 15px 10px 10px 0px;
+    height: 250px;
+    overflow-y: auto;
 }
 
 @media (min-width: 768px) {
@@ -31,4 +57,41 @@ img.img-responsive {
     height:184px;
     width:auto;
     max-width:245px;
+}
+
+.thumbs {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    background-position: center center;
+    background-size: cover;
+}
+
+.col-sm-1 {
+    width:auto;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+
+.overlay-layer {
+  opacity:0;
+  width:100px;
+  height:100px;
+  position: absolute;
+  background-color:white;
+      transition : opacity 150ms; 
+    -webkit-transition : opacity 150ms; 
+    -moz-transition : opacity 150ms;
+    -o-transition : opacity 150ms; 
+}
+
+div.row.button_row {
+    margin: -5px 45px 10px 5px;
+    text-align: right;
+}
+
+.btn {
+    border-radius: 0px;
+    padding: 3px 6px;
 }
