@@ -30,7 +30,7 @@
 </head>
 
 <body>
-
+  
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -42,7 +42,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{url_for('show_recommendation_page')}}">
 		  <img class="logo" src="https://s3-us-west-1.amazonaws.com/yelpphoto/static_images/visaurant_logo_white_helv.png">
 		</a>
             </div>
@@ -219,19 +219,20 @@
 				  var $grid = $('.grid').isotope({
 				  itemSelector: '.thumbs',
 				  layoutMode: 'fitRows',
+				  animationEngine : 'css'
 				  });
 
 
 $(document).ready(function(){
 	$grid.isotope({sortBy:'random'});
-				  $('.overlay-layer').click(function(){
+				  $('.overlay-layer').mousedown(function(){
 				  cur_id = $(this).attr('id')
 				  console.log(cur_id);
 				  $grid.isotope({ filter:'#'+cur_id });
 				  });
-				  $('.reset_button').click(function(){$grid.isotope({ filter: '*' });
+				  $('.reset_button').mousedown(function(){$grid.isotope({ filter: '*' });
 				  $grid.isotope({ sortBy: 'random' });});
-				  $('.cluster_button').click(function(){$grid.isotope({ sortBy: 'original-order' });});
+				  $('.cluster_button').mousedown(function(){$grid.isotope({ sortBy: 'original-order' });});
 	$('[data-toggle="tooltip"]').tooltip(); 
 	});			  
     </script>

@@ -261,4 +261,35 @@ footer {
     background-position: center center;
     background-size: cover;
     display:inline-block;
+    margin: 0px 2px 20px 2px;
 }
+
+.row {
+margin-right: 0px;
+margin-left: 0px;
+}
+
+span.text-content {
+  position: absolute;
+  margin-top: 6%;
+  margin-botton:6%;
+  width:79.75%;
+  height: 12%;
+  color: black;
+  font-size: 250%;
+  font-family: inherit;
+  opacity:0;
+}
+
+.recommended_rest:hover span.text-content {
+    color:inherit;
+    opacity:1;
+    z-index:9999;
+}
+
+.recommended_rest:hover .recommended_rest_photo {
+    color:white;
+    opacity:0.7;
+}
+
+

@@ -73,7 +73,11 @@ img.img-responsive {
     padding-left: 0px;
 }
 
-
+.grid {
+    transform:translate3d(0,0,0);
+  -webkit-transform:translate3d(0,0,0);
+  -moz-transform:translate3d(0,0,0);
+}
 .overlay-layer {
   opacity:0;
   width:100px;

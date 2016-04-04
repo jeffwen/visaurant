@@ -62,7 +62,7 @@
             <h1>Visaurant</h1>
             <h3>Reimagining the way you eat</h3>
             <br>
-            <a href="#recommendations" class="btn btn-dark btn-lg">Get Started</a>
+            <a href="#selections" class="btn btn-dark btn-lg">Get Started</a>
         </div>
     </header>
 
@@ -97,14 +97,12 @@
 
     <section id="recommendations">
       <div class="row text-center">
-	<div class="col-lg-10 col-lg-offset-1">
       <h2>Our Recommendations</h2>
-      <p><i>Based on your selections, we recommend checking out the following restaurants! Click on the restaurant to go to the restaurant page.</i></p>
+      <p><i>Based on your selections above, we recommend checking out the following restaurants! Click on the restaurant to go to the restaurant page.</i></p>
       <hr class="small">
       <div class="recommendations_container">
 	
       </div>
-	</div>
 	</div>
     </section>
     
@@ -166,6 +164,10 @@
 
     <!-- Custom Theme JavaScript -->
     <script>
+
+      // hide the recommendations portion
+
+      $("#recommendations").hide();
     // Closes the sidebar menu
     $("#menu-close").click(function(e) {
         e.preventDefault();
@@ -247,9 +249,43 @@
     $('.carousel').slick('slickNext');
     if (selections.length==4){
     getRecommendations(selections);
+    $("#recommendations").show();
     };
     });
 
+
+    function redirect(someBusiness){
+    $.ajax({
+    type: "POST",
+    contentType: "application/json; charset=utf-8",
+    url: "/redirect_me",
+    dataType: "json",
+    async: true,
+    data: JSON.stringify({'url':someBusiness}),
+    success: function(data){
+    <!-- console.log(data); -->
+    window.location.href = data;
+    },
+    error: function(data){}
+    })
+    };
+    
+    $("body").click(function(e){
+    <!-- var the_id = $(e.target).attr('id'); -->
+    <!-- var the_class = $(e.target).attr('class'); -->
+    var the_data_group = $(e.target).attr('data-group'); 
+    <!-- console.log(the_id); -->
+    <!-- console.log(the_class); -->
+    console.log(the_data_group);
+
+    if (the_data_group == 'recommendations'){
+    var the_id = $(e.target).attr('id');
+    <!-- console.log(the_id); -->
+    redirect(the_id);
+    }
+
+    });
+    
     </script>
 
 </body>

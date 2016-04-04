@@ -1,4 +1,4 @@
-from flask import Flask, jsonify,render_template, send_file, request
+from flask import Flask, jsonify,render_template, send_file, request, redirect, url_for
 import pymongo
 import pandas as pd
 import json
@@ -52,7 +52,7 @@ def hello_world():
     #return 'Hello from Flask!'
     return "Cool hello world thing dude"
 
-@app.route('/business/<businessid>')
+@app.route('/business/<businessid>/')
 def show_business_profile(businessid):
     data = restaurants.find_one({'business_id':businessid})
 
@@ -70,7 +70,7 @@ def show_business_profile(businessid):
 
     # create dictionary with restaurant photo clusters
     clusters_cur = photo_clusters.find({'business_id':businessid})
-    clusters = [i for i in clusters_cur]
+    clusters = [i for i in clusters_cur if 'cluster' in i]
 
     cluster_dict = defaultdict(list)
     for photo in clusters:
@@ -98,7 +98,7 @@ def modal():
 
     return json.dumps(review_list)
 
-@app.route("/recommend")
+@app.route("/recommend/")
 def show_recommendation_page():
     restaurant_set = set(df.business_id)
     recommended_restaurants = random.sample(restaurant_set,12)
@@ -130,15 +130,20 @@ def get_recs():
     # write html with python...
     final_div = ''
     for key, values in data_dict.items():
-        div = "<div class='recommended_rest' id='"+key[0]+"'>"
+        div = "<div class='recommended_rest' data-group='recommendations' id='"+key[0]+"'><span class='text-content' data-group='recommendations' id='"+key[0]+"'><span data-group='recommendations' id='"+key[0]+"'>"+key[1]+"</span></span>"
         for url in values:
-            div += "<div class='recommended_rest_photo' style='background-image:url("+url+ ")'></div>"
+            div += "<div class='recommended_rest_photo' data-group='recommendations' id='"+key[0]+ "' style='background-image:url("+url+ ")'></div>"
         div += "</div>"
         final_div += div
     aDict = {}
     aDict['html'] = final_div
     return json.dumps(aDict)
-    
+
+@app.route("/redirect_me", methods=["POST"])
+def redirect_me():
+    data = request.get_json()
+    businessid = data['url']
+    return json.dumps(url_for('show_business_profile', businessid=str(businessid)))
 
 if __name__ == '__main__':
     app.run(debug=True)
