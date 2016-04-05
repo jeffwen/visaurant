@@ -21,16 +21,25 @@
 
     <link href= "{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
 
+    <link href="{{ url_for('static', filename='fonts/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+
+
+    <script type="text/javascript">
+$(window).load(function() {
+	$(".loader").fadeOut("slow");
+})
+</script>
 </head>
 
 <body>
-  
+  <div class="loader"></div>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -47,55 +56,55 @@
 		</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                      <a href="#" data-toggle="modal" data-target="#about_modal">About</a>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#contact_modal">Contact</a>
-                    </li>
-                </ul>
-            </div>
+            <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
+            <!--     <ul class="nav navbar-nav"> -->
+            <!--         <li> -->
+            <!--           <a href="#" data-toggle="modal" data-target="#about_modal">About</a> -->
+            <!--         </li> -->
+            <!--         <li> -->
+            <!--             <a href="#" data-toggle="modal" data-target="#contact_modal">Contact</a> -->
+            <!--         </li> -->
+            <!--     </ul> -->
+            <!-- </div> -->
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
 
 <!-- modal for about and contact info -->
-<div class="modal fade" id="about_modal" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-	<div class="modal-body">
-	  <p>Something about this project</p>
-	  </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-</div>
+<!-- <div class="modal fade" id="about_modal" role="dialog"> -->
+<!--     <div class="modal-dialog modal-lg"> -->
+<!--       <div class="modal-content"> -->
+<!--         <div class="modal-header"> -->
+<!--           <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+<!--           <h4 class="modal-title">Modal Header</h4> -->
+<!--         </div> -->
+<!-- 	<div class="modal-body"> -->
+<!-- 	  <p>Something about this project</p> -->
+<!-- 	  </div> -->
+<!--         <div class="modal-footer"> -->
+<!--           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!-- </div> -->
 
-<div class="modal fade" id="contact_modal" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-	<div class="modal-body">
-	  <p>Something somthing contact</p>
-	  </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- <div class="modal fade" id="contact_modal" role="dialog"> -->
+<!--     <div class="modal-dialog modal-lg"> -->
+<!--       <div class="modal-content"> -->
+<!--         <div class="modal-header"> -->
+<!--           <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+<!--           <h4 class="modal-title">Modal Header</h4> -->
+<!--         </div> -->
+<!-- 	<div class="modal-body"> -->
+<!-- 	  <p>Something somthing contact</p> -->
+<!-- 	  </div> -->
+<!--         <div class="modal-footer"> -->
+<!--           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
     
     <!-- Page Content -->
     <div class="container">
@@ -104,11 +113,11 @@
             <div class="col-sm-8">
                 <h1 class="page-header">{{data.name}}</h1>
             </div>
-	    <div class="col-sm-4" id="address">
-              <i>{{data.full_address}}</i>
-            </div>
+	   
 	</div>
 
+<!-- start of grid buttons -->
+	
 	<div class="row button_row">
 	  <button type="button" class="btn btn-default cluster_button">Sort by Cluster</button>
 	  <button type="button" class="btn btn-default reset_button">Reset</button>
@@ -133,27 +142,49 @@
 	</div>
 	<!-- Grid ending -->
 		
-            </div>
+    </div>
 
-    
-	    <div class="col-lg-12 restaurant-detail">
-		<div class="col-md-1">
+    <!-- Reviews div -->
+    <div id="review_container">
+      <h3>Reviews</h3>
+    <div id="reviews_div"></div>
+    </div>
+    <!-- Restaurant details div -->
 
-		</div>
-		<div class="col-md-5">
+    <div class="col-lg-12 restaurant-detail">
+		<div class="col-md-3">
 		  {{ hours.to_html(classes="table table-striped").replace('border="1"','border="0"') | safe}}
+		</div>
+		<div class="col-md-3">
+		  <p id="address_p"><strong>Address</strong></p>
+		  <hr id="address_hr">
+		  <p>{{data.full_address}}</p>
+		  <p id="address_p"><strong>Rating</strong></p>
+		  <hr id="address_hr">
+
+		  {% if data.stars|round|int > data.stars %}
+	              {% for n in range((data.stars|round|int)-1) %}
+	                 <i class="fa fa-star"></i>
+			 {% endfor %}
+	                 <i class="fa fa-star-half-o"></i>
+		      {% for n in range(5-(data.stars|round|int)) %}
+			 <i class="fa fa-star-o"></i>
+			 {% endfor %}
+		   {% elif data.stars|round|int == data.stars %}
+			 {% for n in range(data.stars|round|int) %}
+	                 <i class="fa fa-star"></i>
+			 {% endfor %}
+			  {% for n in range(5-(data.stars|round|int)) %}
+			 <i class="fa fa-star-o"></i>
+			 {% endfor %}
+		   {% endif %}
+			 
 		</div>
 		<div class="col-md-5">
 		  {{"decoupled-map"|googlemap(data.latitude, data.longitude, markers=[(data.latitude, data.longitude)], style="width:450px;height:300px;")}}
 		</div>
-		<div class="col-md-1">
-		 
-		</div>
             </div>
-	    
-
-        <hr>
-
+    
         <!-- Footer -->
         <footer>
             <div class="row">
@@ -175,34 +206,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
 
     <script>
-      $("[id^=reviews_div_]").hide();
+      $("#review_container").hide();
       
-       function getReviews(caption,business_id, modal_num){
+       function getReviews(caption,business_id){
        $.ajax({
          type: "POST",
          contentType: "application/json; charset=utf-8",
-         url: "/modal",
+         url: "/reviews",
          dataType: "json",
          async: true,
          data: JSON.stringify({'text':caption,'business_id':business_id}),
       success: function (data) {
-      $("#reviews_div_"+modal_num).html("");
-       for (i=0; i <=data.length; i++) {
-	$("#reviews_div_"+modal_num).append("<li>"+data[i]['text']+"</li>"+"<hr>");
-       console.log(modal_num);
+      $("#reviews_div").html("");
+      for (i=0; i <data.length; i++) {
+	$("#reviews_div").append("<li>"+data[i]['text']+"</li>"+"<hr>");
          };},
          error: function (data) {
          }
        })
 	  };
 
-      $("img.img-rounded").click(function(){
-	aStr = $(this).attr('title');
-	modal_num = $(this).attr('data-modal-num')  
-	getReviews(aStr,"{{businessid}}", modal_num);
-	$('#reviews_div_'+modal_num).show();		  
 
-				  });
+				var num_clicks = 0;
+				
+				  $("body").mousedown(function(e){
+				aStr = $(e.target).attr('data-original-title');
+				aClass = $(e.target).attr('class');
+				console.log($(e.target).attr('class'));
+				if (num_clicks>1 && aClass=='overlay-layer rest_images') {
+	getReviews(aStr,"{{businessid}}");
+	$('#review_container').show();		  
+
+				  }});
 
 	$('.overlay-layer').hover(
 	function() {
@@ -225,14 +260,20 @@
 
 $(document).ready(function(){
 	$grid.isotope({sortBy:'random'});
-				  $('.overlay-layer').mousedown(function(){
+				$('.overlay-layer').mousedown(function(){
+				num_clicks= num_clicks + 1;
 				  cur_id = $(this).attr('id')
 				  console.log(cur_id);
 				  $grid.isotope({ filter:'#'+cur_id });
 				  });
-				  $('.reset_button').mousedown(function(){$grid.isotope({ filter: '*' });
+				$('.reset_button').mousedown(function(){
+	num_clicks = 0;
+	$("#reviews_div").html("");
+	      $("#review_container").hide();
+				$grid.isotope({ filter: '*' });
 				  $grid.isotope({ sortBy: 'random' });});
-				  $('.cluster_button').mousedown(function(){$grid.isotope({ sortBy: 'original-order' });});
+
+	$('.cluster_button').mousedown(function(){$grid.isotope({ sortBy: 'original-order' });});
 	$('[data-toggle="tooltip"]').tooltip(); 
 	});			  
     </script>

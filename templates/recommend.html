@@ -79,6 +79,7 @@
 		      {% for key, value in restaurant_dict.iteritems() %}
                         <div class="col-md-4 col-sm-8">
                           <div class="images_container" id={{key}}>
+			    <span class="group_overlay_text" id={{key}}>{{detail_dict[key][0]}}<br>{{detail_dict[key][1]}}</span>
 			    {% for photo in value %}
 			    <div class="group_image" style="background-image:url({{photo}})"></div>
 			    {% endfor %}
@@ -123,31 +124,31 @@
     
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container" id="contact">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4><strong>Start Bootstrap</strong>
+                    <h4><strong>Contact</strong>
                     </h4>
-                    <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+                    <p>Somewhere<br>San Francisco, CA 94105</p>
                     <ul class="list-unstyled">
-                        <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>
-                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:name@example.com">name@example.com</a>
+                        <li><i class="fa fa-phone fa-fw"></i>email me first!</li>
+                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="#">jeff DOT li DOT wen AT gmail DOT com</a>
                         </li>
                     </ul>
                     <br>
                     <ul class="list-inline">
-                        <li>
-                            <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
+		        <li>
+                            <a href="https://www.linkedin.com/in/wenjeff"><i class="fa fa-linkedin-square fa-fw fa-3x"></i></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+                            <a href="http://jeffwen.github.io" title="Jeff's Blog"><i class="fa fa-pencil-square-o fa-fw fa-3x"></i></a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
+		        <li>
+                            <a href="https://www.github.com/jeffwen"><i class="fa fa-github-square fa-fw fa-3x"></i></a>
                         </li>
                     </ul>
                     <hr class="small">
-                    <p class="text-muted">Copyright &copy; Your Website 2014</p>
+                    <p class="text-muted">Copyright &copy; Jeff Wen 2016</p>
                 </div>
             </div>
         </div>
@@ -201,7 +202,8 @@
     <!-- Changing background -->
     var i =0 ;
 
-    var array = ["url('/static/images/1.jpg')","url('/static/images/2.jpg')","url('/static/images/3.jpg')","url('/static/images/4.jpg')"]
+    var array = ["url('/static/images/2.jpg')","url('/static/images/3.jpg')","url('/static/images/4.jpg')","url('/static/images/1.jpg')"]
+    $('header#top.header').css('background-image',"url('/static/images/1.jpg')");
 
     function changeBG(){
     if ( i > array.length-1) {
@@ -212,7 +214,7 @@
     i++;
     }
 
-    window.setInterval("changeBG()", 5000);
+    window.setInterval("changeBG()", 10000);
 
     <!-- Slides -->
     $('.carousel').slick({
@@ -245,7 +247,8 @@
 
     $(".images_container").click(function(d){
 			     selections.push($(this).attr('id'));
-			     console.log(selections);
+    console.log(selections);
+    $(this).css('opacity',0.3);
     $('.carousel').slick('slickNext');
     if (selections.length==4){
     getRecommendations(selections);

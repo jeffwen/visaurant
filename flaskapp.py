@@ -45,13 +45,6 @@ svd.load_data(filename='static/data/review_df_clean.csv', sep=",", format = {'co
 k = 100
 svd.compute(k=k, min_values=5, pre_normalize=None, mean_center=True, post_normalize=True)
 
-
-@app.route('/')
-def hello_world():
-    # return jsonify(results = test)
-    #return 'Hello from Flask!'
-    return "Cool hello world thing dude"
-
 @app.route('/business/<businessid>/')
 def show_business_profile(businessid):
     data = restaurants.find_one({'business_id':businessid})
@@ -82,8 +75,8 @@ def show_business_profile(businessid):
 
     return render_template('restaurants_grid.html', data=data, hours=hours, clusters=cluster_dict, businessid=businessid)
 
-@app.route("/modal", methods=["POST"])
-def modal():
+@app.route("/reviews", methods=["POST"])
+def get_reviews():
     """    When A POST request with json data is made to this uri,
     Read the example from the json and return the reviews associated with the image
     """
@@ -98,27 +91,37 @@ def modal():
 
     return json.dumps(review_list)
 
-@app.route("/recommend/")
+@app.route("/")
 def show_recommendation_page():
     restaurant_set = set(df.business_id)
     recommended_restaurants = random.sample(restaurant_set,12)
+    # recommended_restaurants = ['xNcqwYAUeVOhe3KNC4Xjaw','iUPJmJvHy9fVfRxsuwwdLQ']
+
+    # testing
+    recommended_restaurants[0]='xNcqwYAUeVOhe3KNC4Xjaw'
+    recommended_restaurants[9]='iUPJmJvHy9fVfRxsuwwdLQ'
+    # testing
     
     restaurant_dict = defaultdict(list)
+    detail_dict = defaultdict(list)
     
     for restaurant in recommended_restaurants:
+        print restaurant
         link = 'https://s3-us-west-1.amazonaws.com/yelpphoto/yelp_restaurant_photo/' + restaurant + '/'
         photo_cur = photo_clusters.find({'business_id':restaurant}).limit(4)
         photos = [link+i['photo_id']+'.jpg' for i in photo_cur]
         restaurant_dict[restaurant] = photos
+        detail_cur = restaurants.find_one({"business_id":restaurant})
+        detail_dict[restaurant] = [detail_cur['name'],detail_cur['stars']]
         
-    return render_template('recommend.html', restaurant_dict=restaurant_dict)
+    return render_template('recommend.html', restaurant_dict=restaurant_dict, detail_dict=detail_dict)
 
 @app.route("/get_recs", methods=["POST"])
 def get_recs():
     data = request.get_json()
     selections = data['selections']
     data_dict = defaultdict(list)
-    for selection in selections:
+    for selection in selections[:-1]:
         similar_restaurants,_ = zip(*svd.similar(selection, n=2))
         rec = similar_restaurants[1]
         restaurant_info = restaurants.find_one({"business_id":rec})
@@ -127,6 +130,15 @@ def get_recs():
         photos = [link+i['photo_id']+'.jpg' for i in photo_cur]
         data_dict[(rec,restaurant_info['name'])] = photos
 
+    # testing
+    rec = 'AYbUb5UcAngroJ6uJG7tLQ'
+    restaurant_info = restaurants.find_one({"business_id":rec})
+    link = 'https://s3-us-west-1.amazonaws.com/yelpphoto/yelp_restaurant_photo/' + rec + '/'
+    photo_cur = photo_clusters.find({'business_id':rec}).limit(5)
+    photos = [link+i['photo_id']+'.jpg' for i in photo_cur]
+    data_dict[(rec,restaurant_info['name'])] = photos
+    # testing
+    
     # write html with python...
     final_div = ''
     for key, values in data_dict.items():
