@@ -13,7 +13,6 @@ import recsys.algorithm
 from recsys.algorithm.factorize import SVD
 
 
-
 app = Flask(__name__)
 
 # loading Google maps generator for the restaurant pages

@@ -127,8 +127,7 @@
         <div class="container" id="contact">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4><strong>Contact</strong>
-                    </h4>
+                    <h2>Contact</h2>
                     <p>Somewhere<br>San Francisco, CA 94105</p>
                     <ul class="list-unstyled">
                         <li><i class="fa fa-phone fa-fw"></i>email me first!</li>
@@ -242,6 +241,11 @@
     })
     };
 
+
+    function scroll_to_recs(){
+    $('html, body').animate({
+        scrollTop: $("#recommendations").offset().top
+    }, 1400)};
     
     var selections = [];
 
@@ -253,6 +257,7 @@
     if (selections.length==4){
     getRecommendations(selections);
     $("#recommendations").show();
+    scroll_to_recs();
     };
     });
 
