@@ -59,6 +59,7 @@ $(window).load(function() {
 <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="{{url_for('show_recommendation_page')}}">Home</a></li>
+	     <li><a href="#" data-toggle="modal" data-target="#about_modal">About</a></li>
           </ul>
         </div>
 	                <!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,22 +79,24 @@ $(window).load(function() {
     </nav>
 
 <!-- modal for about and contact info -->
-<!-- <div class="modal fade" id="about_modal" role="dialog"> -->
-<!--     <div class="modal-dialog modal-lg"> -->
-<!--       <div class="modal-content"> -->
-<!--         <div class="modal-header"> -->
-<!--           <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-<!--           <h4 class="modal-title">Modal Header</h4> -->
-<!--         </div> -->
-<!-- 	<div class="modal-body"> -->
-<!-- 	  <p>Something about this project</p> -->
-<!-- 	  </div> -->
-<!--         <div class="modal-footer"> -->
-<!--           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-<!--         </div> -->
-<!--       </div> -->
-<!--     </div> -->
-<!-- </div> -->
+<div class="modal fade" id="about_modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">About this project</h4>
+        </div>
+	<div class="modal-body">
+	  <p>This web application was created as Jeff Wen's final project for the Metis data science bootcamp.</p>
+	  <p>The goal of this web application was to reimagine the way a user would look for and identify the food items that he or she may be interested in trying out. Specifically, images are clustered by visual similarity to give users a more streamlined experience when searching for food. The user can quickly narrow down to the food items of interest.</p>
+	  <p>Feel free to check out the application and go back to the home page to experience the entire application! If there are any questions please contact me at jeff.li.wen@gmail.com</p>
+	  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
 
 <!-- <div class="modal fade" id="contact_modal" role="dialog"> -->
 <!--     <div class="modal-dialog modal-lg"> -->
@@ -127,7 +130,36 @@ $(window).load(function() {
 	<div class="row button_row">
 	  <button type="button" class="btn btn-default cluster_button">Sort by Cluster</button>
 	  <button type="button" class="btn btn-default reset_button">Reset</button>
+	  <button type="button" class="btn btn-default info_button" data-toggle="modal" data-target="#info_modal">
+          <i class="fa fa-info"></i> Info</button>
 	</div>
+
+
+<div class="modal fade" id="info_modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">How to use this page</h4>
+        </div>
+	<div class="modal-body">
+	  <ol>
+	    <li>Take a look at the images and see what you'd like to eat or look at</li>
+	    <li>Hover over the image and see that only images within the same cluster (of visually similar images) will be highlighted</li>
+	    <li>Click on the image to filter the rest of the images to only those within the same cluster</li>
+	    <li>Once the images are filtered, click a particular image to bring up the associated reviews (based on parsing the caption)</li>
+	    <ul><li>It is possible that nothing will appear if there are no reviews that match the caption</li></ul>
+	    <li>Click 'Reset' to return to all the unfiltered images</li>
+	    <li>Click 'Sort by cluster' to return images sorted by cluster</li>
+	  </ol>
+	  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>	
+	
 	
 	<div class="grid">
 
